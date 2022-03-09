@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { UsersModule } from "../users/users.module";
-import { jwtSecret } from "../utils/constants";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { GoogleStrategy } from "./strategies/google.strategy";
@@ -15,7 +14,7 @@ import { AuthResolver } from "./auth.resolver";
     UsersModule,
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
-      secret: jwtSecret,
+      secret: process.env.JWT_SECRET,
       signOptions: {
         expiresIn: "3600s",
       },

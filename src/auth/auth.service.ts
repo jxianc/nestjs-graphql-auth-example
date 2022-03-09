@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { jwtSecret } from "../utils/constants";
 import { User } from "../users/entity/user.entity";
 import { UsersService } from "../users/users.service";
 import { Payload } from "src/utils/types";
@@ -36,7 +35,7 @@ export class AuthService {
 
   async verifyToken(token: string): Promise<User> {
     const decodedPayload: Payload = this.jwtService.verify(token, {
-      secret: jwtSecret,
+      secret: process.env.JWT_SECRET,
     });
 
     const user = await this.userService.getUserByEmail(decodedPayload.email);
